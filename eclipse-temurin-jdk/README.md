@@ -1,0 +1,30 @@
+# Introduction
+Docker image used to build projects with [gradle](https://gradle.org). Similar to [maven](https://hub.docker.com/_/maven/).
+
+# Building image
+Clone this repository and then run:
+```
+docker build -t temurin-17-jdk-gradle:latest -t temurin-17-jdk-gradle:7.5-alpine .
+```
+
+# Exposed volumes
+
+* /work : Main directory where gradle works from.
+* /GRADLE_CACHE : Gradle cache directory.
+  If not set, it will cause gradle to re-download libraries on every iteration. If set to a local host directory it will speed up subsequent builds.
+
+# Usage
+Go to the base directory of your gradle project and run:
+```
+docker run  -v $PWD:/work -v $PWD/.gradle:/GRADLE_CACHE hipposareevil/alpine-gradle --version
+```
+
+# Push to Hub
+You can push a new image to this repository using the CLI:
+```
+docker tag temurin-17-jdk-gradle:latest taoqn/temurin-17-jdk-gradle:latest
+docker push taoqn/temurin-17-jdk-gradle:latest
+
+docker tag temurin-17-jdk-gradle:7.5-alpine taoqn/temurin-17-jdk-gradle:7.5-alpine
+docker push taoqn/temurin-17-jdk-gradle:7.5-alpine
+```
